@@ -25,6 +25,8 @@ if [ -d "apps" ]; then
     echo ""
     echo "=> Running tests for: $app"
     cd apps/$app
+    docker pull selenium/standalone-chrome
+    docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome
     mix test.ci
     SUCCESS=$?
 
@@ -35,6 +37,8 @@ if [ -d "apps" ]; then
     cd ../../
   done
 else
+  docker pull selenium/standalone-chrome
+  docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome
   mix test.ci
 fi
 
